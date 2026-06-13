@@ -21,7 +21,7 @@ void add (Student** head, int id, char *name, int score){
         while(p->next != NULL) { p = p -> next;}
         p->next = s;
     }
-};
+}
 void update(Student** head, int id, int score){
     Student *p = *head;
 
@@ -33,7 +33,7 @@ void update(Student** head, int id, int score){
         p->score = score;
     }
     
-};
+}
 void delete(Student** head, int id){
     if (*head == NULL) {
         printf("Error: student not found.\n"); // 
@@ -58,8 +58,51 @@ void delete(Student** head, int id){
         free(p->next);
         p->next = t;
     }
-};
-void find (Student** head, int id);
-void stats (Student** head);
-void list(Student** head);
-void free_all(Student** head);
+}
+Student* find (Student* head, int id){
+    Student *p = head;
+    while(p != NULL && p->id != id) { p = p->next;}
+    return p;
+}
+void stats (Student* head){
+    if(head == NULL){ 
+        printf("No student data available\n");
+        return;
+    }
+    int count = 0;
+    int Sum = 0;
+    int Max = 0;
+    int Min = 100;
+    while(head != NULL){
+        count ++;
+        Sum += head->score;
+        if(head->score > Max){ Max = head->score;}
+        if(head->score < Min){ Min = head->score;}
+        head = head->next;
+    }
+    printf("Count: %d\n",count);
+    printf("Average: %f\n", (float)Sum/count);
+    printf("Max: %d\n",Max);
+    printf("Min: %d\n",Min);
+}
+void list(Student* head){
+    if(head == NULL){
+        printf("No students found.\n");
+        return;
+    }
+
+    printf("%-5s %-10s %-5s\n","ID","Name","Score");
+    while(head != NULL){
+        printf("%-5d %-10s %-5d\n",head->id,head->name,head->score);
+        head = head->next;
+    }
+}
+void free_all(Student** head){
+    Student *p = *head;
+    while(p != NULL){
+        Student *t = p;
+        p = p->next;
+        free(t);
+    }
+    *head = NULL;
+}
