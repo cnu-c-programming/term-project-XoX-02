@@ -1,5 +1,5 @@
-#include "student.h"
 #include <string.h>
+#include "student.h"
 
 void add (Student** head, int id, char *name, int score){
     /*특히 중복된 ID가 입력된 경우 

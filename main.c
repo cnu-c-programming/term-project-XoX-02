@@ -78,6 +78,20 @@ int main(int argc, char *argv[]) {
         }
 
 #ifdef ADMIN_MODE
+    Command commands[] = {
+        {"save", handle_save, "save", "Save students to CSV"},
+        {"reload", handle_reload, "reload", "Reload students from CSV"},
+        {"add", handle_add, "add <id> <name> <score>", "Add a student"},
+        {"delete", handle_delete, "delete <id>", "Delete a student"},
+        {"update", handle_update, "update <id> <score>", "Update student score"},
+        {"find", handle_find, "find <id>", "Find student"},
+        {"list", handle_list, "list", "List students"},
+        {"stats", handle_stats, "stats", "Show statistics"},
+        {"help", handle_help, "help", "Show help"},
+        {"clear", handle_clear, "clear", "Clear screen"},
+        {"exit", handle_exit, "exit", "Exit shell"}
+    };
+
     /* Admin shell: supports add, delete, update, save, load, sort, list, find, help, exit */
     if (cmd_file) {
         run_command_file(cmd_file, csv_path);
@@ -86,6 +100,15 @@ int main(int argc, char *argv[]) {
     }
 
 #elif defined(CLIENT_MODE)
+    Command commands[] = {
+        {"reload", handle_reload, "reload", "Reload students from CSV"},
+        {"find", handle_find, "find <id>", "Find student"},
+        {"list", handle_list, "list", "List students"},
+        {"stats", handle_stats, "stats", "Show statistics"},
+        {"help", handle_help, "help", "Show help"},
+        {"clear", handle_clear, "clear", "Clear screen"},
+        {"exit", handle_exit, "exit", "Exit shell"}
+    };
     /* Client shell: supports find, list, help, exit  (read-only) */
     if (cmd_file) {
         run_command_file(cmd_file, csv_path);
