@@ -9,11 +9,11 @@ void csv_load(char *fname, Student **head){
     }
     char student[64];
     int id, score; char name[32];
-
+    
     fgets(student, sizeof(student),fp);
 
     while(fgets(student,sizeof(student),fp) != NULL){
-        int n = sscanf(student,"%d %[^,],%d", &id, name, &score);
+        int n = sscanf(student,"%d, %[^,],%d", &id, name, &score);
         if(n == 3){
             add(head, id, name, score);
         }else{
@@ -29,5 +29,12 @@ void csv_save(char *fname, Student *head){
         printf("Error: not exist file\n");
         return;
     }
+    fprintf(fp,"id,name,score\n");
+    while(head != NULL){
+        fprintf(fp,"%d,%s,%d\n", head->id, head->name, head->score);
+        head = head->next;
+    }
+    fclose(fp);
+    return;
     
 }
