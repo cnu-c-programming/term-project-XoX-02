@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "student.h"
 
@@ -44,7 +46,7 @@ void delete(Student** head, int id){
          p = p->next;
     }
     
-    if(p->nest != NULL){
+    if(p->next != NULL){
         Student *t = p->next->next;
         free(p->next);
         p->next = t;

@@ -1,0 +1,12 @@
+list
+add 5 Kim 50
+update 5 100
+find 5
+find 123
+add -1 lee 13
+add df df d 
+update 9 1239
+help
+save
+clear
+exit

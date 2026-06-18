@@ -3,36 +3,7 @@
 #include "student.h"
 #include <stdio.h>
 #include <string.h>
-#ifdef ADMIN_MODE
-Command commands[] = {
- {"save", handle_save, "save", "Save students to CSV"},
- {"reload", handle_reload, "reload", "Reload students from CSV"},
- {"add", handle_add, "add <id> <name> <score>", "Add a student"},
- {"delete", handle_delete, "delete <id>", "Delete a student"},
- {"update", handle_update, "update <id> <score>", "Update student score"},
- {"find", handle_find, "find <id>", "Find student"},
- {"list", handle_list, "list", "List students"},
- {"stats", handle_stats, "stats", "Show statistics"},
- {"help", handle_help, "help", "Show help"},
- {"clear", handle_clear, "clear", "Clear screen"},
- {"exit", handle_exit, "exit", "Exit shell"},
- {NULL,NULL,NULL,NULL}
-};
-#endif
-#ifdef CLIENT_MODE
-Command commands[] = {
- {"reload", handle_reload, "reload", "Reload students from CSV"},
- {"find", handle_find, "find <id>", "Find student"},
- {"list", handle_list, "list", "List students"},
- {"stats", handle_stats, "stats", "Show statistics"},
- {"help", handle_help, "help", "Show help"},
- {"clear", handle_clear, "clear", "Clear screen"},
- {"exit", handle_exit, "exit", "Exit shell"},
- {NULL,NULL,NULL,NULL}
-};
-#endif
 
-char *p_fname;
 
 ShellResult handle_save(char* args, Student** head){
     int student_count = csv_save(p_fname,*head);
@@ -86,6 +57,7 @@ ShellResult handle_delete(char* args, Student** head){
         return SHELL_ERR_STUDENT_NOT_FOUND;
     }
     delete(head,id);
+    printf("Student deleted.\n");
     return SHELL_OK;
 }
 ShellResult handle_update(char* args, Student** head){
@@ -103,6 +75,7 @@ ShellResult handle_update(char* args, Student** head){
         return SHELL_ERR_STUDENT_NOT_FOUND;
     }else {
         s -> score = score;
+        printf("Student updated.\n");
         return SHELL_OK;
     }
 }
@@ -130,7 +103,7 @@ ShellResult handle_stats(char* args, Student** head){
 }
 ShellResult handle_help(char* args, Student** head){
     printf("Commands:\n");
-    for(int i = 0; i < sizeof(commands)/sizeof(Command); i++){
+    for(int i = 0; commands[i].name != NULL; i++){
          printf("%-20s%-20s\n",commands[i].usage,commands[i].description);
     }
     return SHELL_OK;
@@ -141,6 +114,35 @@ ShellResult handle_clear(char* args, Student** head){
 }
 ShellResult handle_exit(char* args, Student** head){
     free_all(head);
-    printf("Goodbye.");
+    printf("Goodbye.\n");
     return SHELL_EXIT;
 }
+
+#ifdef ADMIN_MODE
+Command commands[] = {
+ {"save", handle_save, "save", "Save students to CSV"},
+ {"reload", handle_reload, "reload", "Reload students from CSV"},
+ {"add", handle_add, "add <id> <name> <score>", "Add a student"},
+ {"delete", handle_delete, "delete <id>", "Delete a student"},
+ {"update", handle_update, "update <id> <score>", "Update student score"},
+ {"find", handle_find, "find <id>", "Find student"},
+ {"list", handle_list, "list", "List all students"},
+ {"stats", handle_stats, "stats", "Show statistics"},
+ {"help", handle_help, "help", "Show help"},
+ {"clear", handle_clear, "clear", "Clear screen"},
+ {"exit", handle_exit, "exit", "Exit shell"},
+ {NULL,NULL,NULL,NULL}
+};
+#endif
+#ifdef CLIENT_MODE
+Command commands[] = {
+ {"reload", handle_reload, "reload", "Reload students from CSV"},
+ {"find", handle_find, "find <id>", "Find student"},
+ {"list", handle_list, "list", "List students"},
+ {"stats", handle_stats, "stats", "Show statistics"},
+ {"help", handle_help, "help", "Show help"},
+ {"clear", handle_clear, "clear", "Clear screen"},
+ {"exit", handle_exit, "exit", "Exit shell"},
+ {NULL,NULL,NULL,NULL}
+};
+#endif

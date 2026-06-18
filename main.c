@@ -36,6 +36,11 @@ char *p_fname = NULL;
  *   - Loop until the user types "exit" or EOF.
  * --------------------------------------------------------------- */
 void run_shell(const char *csv_path) {
+    #ifdef ADMIN_MODE
+        printf("[Admin Program]\n");
+    #elif defined CLIENT_MODE
+        printf("[Client Program]\n");
+    #endif
     Student *head = NULL;
     char input[64];
     char cmd[32];
@@ -121,6 +126,11 @@ void run_shell(const char *csv_path) {
  *   - Close the file when done.
  * --------------------------------------------------------------- */
 void run_command_file(const char *cmd_file, const char *csv_path) {
+    #ifdef ADMIN_MODE
+        printf("[Admin Program]\n");
+    #elif defined CLIENT_MODE
+        printf("[Client Program]\n");
+    #endif
     int line_num = 0;
     Student *head = NULL;
     char input[64];
@@ -217,6 +227,13 @@ int main(int argc, char *argv[]) {
     const char *csv_path  = NULL; /* default CSV file */
     const char *cmd_file  = NULL;           /* -f <file> argument */
 
+    for (int i = 1; i < argc; i++) {        
+        if (strcmp(argv[i], "-f") == 0 && i + 1 < argc) {
+            cmd_file = argv[++i];
+        } else {
+            csv_path = argv[i];
+            }
+        }
     if(csv_path == NULL){
         #ifdef ADMIN_MODE
         printf("Usage: ./admin_shell <csv_file> [-f command_file]\n");
@@ -225,14 +242,6 @@ int main(int argc, char *argv[]) {
         #endif
         return 0;
     }
-
-    for (int i = 1; i < argc; i++) {        
-        if (strcmp(argv[i], "-f") == 0 && i + 1 < argc) {
-            cmd_file = argv[++i];
-        } else {
-            csv_path = argv[i];
-            }
-        }
 
 #ifdef ADMIN_MODE
     /* Admin shell: supports add, delete, update, save, load, sort, list, find, help, exit */

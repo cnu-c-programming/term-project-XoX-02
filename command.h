@@ -1,9 +1,8 @@
+#include "student.h"
 #ifndef COMMAND_H
 #define COMMAND_H
 
 extern char *p_fname;
-extern Command commands[];
-
 typedef enum {
     SHELL_OK = 0,
     SHELL_EXIT,
@@ -26,5 +25,6 @@ typedef struct{
     const char* description;
 }Command;
 
+extern Command commands[];
 
 #endif
