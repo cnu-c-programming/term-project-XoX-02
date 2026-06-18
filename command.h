@@ -2,6 +2,7 @@
 #define COMMAND_H
 
 extern char *p_fname;
+extern Command commands[];
 
 typedef enum {
     SHELL_OK = 0,
@@ -25,16 +26,5 @@ typedef struct{
     const char* description;
 }Command;
 
-ShellResult handle_save(char* args, Student** head);
-ShellResult handle_reload(char* args, Student** head);
-ShellResult handle_add(char* args, Student** head);
-ShellResult handle_delete(char* args, Student** head);
-ShellResult handle_update(char* args, Student** head);
-ShellResult handle_find(char* args, Student** head);
-ShellResult handle_list(char* args, Student** head);
-ShellResult handle_stats(char* args, Student** head);
-ShellResult handle_help(char* args, Student** head);
-ShellResult handle_clear(char* args, Student** head);
-ShellResult handle_exit(char* args, Student** head);
 
 #endif

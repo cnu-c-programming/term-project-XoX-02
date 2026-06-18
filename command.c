@@ -15,7 +15,8 @@ Command commands[] = {
  {"stats", handle_stats, "stats", "Show statistics"},
  {"help", handle_help, "help", "Show help"},
  {"clear", handle_clear, "clear", "Clear screen"},
- {"exit", handle_exit, "exit", "Exit shell"}
+ {"exit", handle_exit, "exit", "Exit shell"},
+ {NULL,NULL,NULL,NULL}
 };
 #endif
 #ifdef CLIENT_MODE
@@ -26,7 +27,8 @@ Command commands[] = {
  {"stats", handle_stats, "stats", "Show statistics"},
  {"help", handle_help, "help", "Show help"},
  {"clear", handle_clear, "clear", "Clear screen"},
- {"exit", handle_exit, "exit", "Exit shell"}
+ {"exit", handle_exit, "exit", "Exit shell"},
+ {NULL,NULL,NULL,NULL}
 };
 #endif
 
@@ -59,7 +61,6 @@ ShellResult handle_add(char* args, Student** head){
     int arg_num = sscanf(args,"%d %s %d", &id, name, &score);
 
     if(arg_num < 3){
-        printf("Error: Format incorect\n");
         return SHELL_ERR_MISSING_ARGUMENT;
     }
     if(id <= 0 || (score < 0 || score > 100)){
@@ -67,10 +68,10 @@ ShellResult handle_add(char* args, Student** head){
     }
     Student *s = find(*head,id);
     if(s != NULL){
-        printf("Error: Duplicate id\n");
         return SHELL_ERR_DUPLICATE_STUDENT;
     }
     add(head,id,name,score);
+    printf("Student added.\n");
     return SHELL_OK;
 
 }
@@ -82,7 +83,6 @@ ShellResult handle_delete(char* args, Student** head){
     }
     Student *s = find(*head, id);
     if(s == NULL){
-        printf("Error: student not found.\n"); 
         return SHELL_ERR_STUDENT_NOT_FOUND;
     }
     delete(head,id);
@@ -96,7 +96,7 @@ ShellResult handle_update(char* args, Student** head){
         return SHELL_ERR_MISSING_ARGUMENT;
     }
     if(score < 0 || score > 100){
-        return SHELL_ERR_INVALID_ARGUMENT;
+        return SHELL_ERR_INVALID_SCORE;
     }
     Student *s = find(*head,id);
     if(s == NULL){
