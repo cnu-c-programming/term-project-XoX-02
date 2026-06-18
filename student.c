@@ -61,20 +61,20 @@ void stats (Student* head){
         return;
     }
     int count = 0;
-    int Sum = 0;
-    int Max = 0;
-    int Min = 100;
+    int sum = 0;
+    int max = 0;
+    int min = 100;
     while(head != NULL){
         count ++;
-        Sum += head->score;
-        if(head->score > Max){ Max = head->score;}
-        if(head->score < Min){ Min = head->score;}
+        sum += head->score;
+        if(head->score > max){ max = head->score;}
+        if(head->score < min){ min = head->score;}
         head = head->next;
     }
     printf("Count: %d\n",count);
-    printf("Average: %f\n", (float)Sum/count);
-    printf("Max: %d\n",Max);
-    printf("Min: %d\n",Min);
+    printf("Average: %.1f\n", (float)sum/count);
+    printf("max: %d\n",max);
+    printf("min: %d\n",min);
 }
 void list(Student* head){
     if(head == NULL){

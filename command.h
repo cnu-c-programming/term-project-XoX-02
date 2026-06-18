@@ -1,8 +1,6 @@
 #ifndef COMMAND_H
 #define COMMAND_H
 
-#include "command.c"
-
 extern char *p_fname;
 
 typedef enum {
